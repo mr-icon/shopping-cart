@@ -1,15 +1,14 @@
-import { useRef, useState, useEffect } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-type ref = "boolean"
 
 export function Register(){
-    const userRef = useRef()
-    const errRef = useRef()
+    const userRef = useRef(null)
+    const errRef = useRef(null)
 
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
@@ -25,6 +24,11 @@ export function Register(){
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    // useEffect(() => {
+    //     const userRef = useRef()
+    //     userRef.current = userRef.current.focus();
+    // }, [])
 
     useEffect(() => {
         const result = USER_REGEX.test(user);
@@ -74,6 +78,33 @@ export function Register(){
                     <p id="uidnote" className={userFocus && user && !validName ? "instruction" : "offscreen"}>
                         <FontAwesomeIcon icon={faInfoCircle} />
                         4 to 24 characters. <br />
+                        Must begin with a letter. <br />
+                        Letter, numbers, underscores, hyphens allowed.
+                    </p>
+                <label htmlFor="password">
+                    Password:
+                    <span className={validPwd ? "valid" : "hide"}>
+                        <FontAwesomeIcon icon={faCheck} />
+                    </span>
+                    <span className={validPwd || !user ? "hide" : "invalid"}>
+                        <FontAwesomeIcon icon={faTimes} />
+                    </span>
+                </label>
+                <input 
+                    type="text"
+                    id="username"
+                    ref={userRef} 
+                    autoComplete="off"
+                    onChange={(e) => setUser(e.target.value)}
+                    required
+                    aria-invalid={validPwd ? "false" : "true"}
+                    aria-describedby="uidnote"
+                    onFocus={() => setUserFocus(true)}
+                    onBlur={() => setUserFocus(false)}
+                    />
+                    <p id="uidnote" className={userFocus && user && !validPwd ? "instruction" : "offscreen"}>
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                        3 to 23 characters. <br />
                         Must begin with a letter. <br />
                         Letter, numbers, underscores, hyphens allowed.
                     </p>
