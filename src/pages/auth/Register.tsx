@@ -50,7 +50,7 @@ export function Register(){
         setErrMsg('');
     }, [user, pwd, matchPwd])
     return(
-        <section>
+        <section className="my-auto">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <h1>Register</h1>
             <form>

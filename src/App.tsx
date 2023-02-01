@@ -6,7 +6,6 @@ import { About } from "./pages/About"
 import { Navbar } from "./components/Navbar"
 import { ShoppingCartProvider } from "./context/ShoppingCartContext"
 import { Register } from "./pages/auth/Register"
-
 function App() {
 
   return (
